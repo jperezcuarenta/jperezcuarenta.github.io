@@ -1,8 +1,9 @@
----
-layout: post
-title:  "Predicting ENSO Event"
-date:   2021-04-07 7:55:10 -0700
----
+
+# Predicting the ENSO Event
+This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (EN-SO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event. 
+
+We first declare the Python libraries accessed.
+
 
 ```
 # from google.colab import files
@@ -38,21 +39,6 @@ from torch.utils.data import Dataset, DataLoader
 # Display YouTube 
 from IPython.display import YouTubeVideo
 ```
-
-    Mounted at /content/gdrive
-    Collecting netCDF4
-    [?25l  Downloading https://files.pythonhosted.org/packages/37/56/f65978898fb8e7e5df9c67531d86eb24eb04938deae3b61dbcce12c98212/netCDF4-1.5.6-cp37-cp37m-manylinux2014_x86_64.whl (4.7MB)
-    [K     |████████████████████████████████| 4.7MB 5.7MB/s 
-    [?25hCollecting cftime
-    [?25l  Downloading https://files.pythonhosted.org/packages/41/e0/3e120cca16571c5ee3b35f1ed432c2aae5dc91e2b789e8b9c3a70e721ea0/cftime-1.4.1-cp37-cp37m-manylinux2014_x86_64.whl (313kB)
-    [K     |████████████████████████████████| 317kB 49.2MB/s 
-    [?25hRequirement already satisfied: numpy>=1.9 in /usr/local/lib/python3.7/dist-packages (from netCDF4) (1.19.5)
-    Installing collected packages: cftime, netCDF4
-    Successfully installed cftime-1.4.1 netCDF4-1.5.6
-
-
-# Predicting the ENSO Event
-This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (ENSO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event.
 
 ## Theoretical Background Part I
 
@@ -160,6 +146,7 @@ s = f(x_{k},W) = Wx_{k} = \begin{pmatrix} 8 \\ 10 \\ -10 \end{pmatrix}.
 $$
 
 Using $\Delta = 3$ (again, this is just a threshold value so no need to pay much attention) and $s_{y_1} = s_{1} = 10$, the loss (or cost) for the selected image is:
+$$
 \begin{align*}
 L_k & =  \sum_{j \neq y_k}^{|Y|-1} \max(0,s_j-s_{y_k}+\Delta) \\
 & = \sum_{j \neq 1}^{2} \max(0,s_{j}-s_{1} + \Delta) \\
@@ -170,7 +157,7 @@ L_k & =  \sum_{j \neq y_k}^{|Y|-1} \max(0,s_j-s_{y_k}+\Delta) \\
 & = 1 + 0 \\
 \therefore L_{k} & = 1 .
 \end{align*}
-
+$$
 As a summary:
 * We have calculated the SVM loss, $L_i$, for a given image.
 * If zero is selected from the $\max$ function this means we are confident a given score, $s_j$, and the correct score, $s_{y_{0}}$, are far from each other so we do not accumulate loss.
@@ -181,18 +168,21 @@ $$
 L = \frac{1}{K} \sum_{i=0}^{K-1} L_{i}.
 $$
 We pay closer attention to $L$ as a function of $W$, since the score depends on the classifier. In other words,
+$$
 \begin{align*}
 L(W) & = \frac{1}{K} \sum_{i=0}^{K-1} ( L_{i} ) \\
 & = \frac{1}{K} \sum_{i=0}^{K-1} \left( \sum_{j \neq y_{i}}^{|Y|-1} \max(0,s_j-s_{y_i}+\Delta) \right) \\
 & = \frac{1}{K} \sum_{i=0}^{K-1} \left( \sum_{j \neq y_{i}}^{|Y|-1} \max(0,f(x_i,W)_j-f(x_i,W)_{y_i}+\Delta) \right)
 \end{align*}
-
+$$
 One last detail is that of regularization. Suppose we had the following image $x$, and row vectors $w_1$, $w_2$ of the classifier matrix $W$:
+$$
 \begin{align*}
 x = \begin{pmatrix}1 \\ 1 \\ 1 \\ 1 \end{pmatrix}, \quad
 w_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}^{T}, \quad
 w_{2} \begin{pmatrix} \frac{1}{4} \\ \frac{1}{4} \\ \frac{1}{4} \\ \frac{1}{4} \end{pmatrix}^{T}.
 \end{align*}
+$$
 We see that the dot product between our image and the rows of $W$ is not unique, i.e., $\langle w_1^{T}, x \rangle = \langle w_2^{T}, x \rangle$. So how do we favor a row of $W$ to classify our image? This is done by including the regularization term 
 $$
 R(W) = \sum_{p} \sum_{q} (W_{p,q})^{2}
@@ -232,35 +222,6 @@ Without further ado, let's obtain the required dataset with a few lines of code.
 # Niño3.4 Indices
 !wget http://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/nino34.long.anom.data.txt
 ```
-
-    --2021-04-02 18:40:45--  http://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/sst.mon.mean.trefadj.anom.1880to2018.nc
-    Resolving portal.nersc.gov (portal.nersc.gov)... 128.55.206.24, 128.55.206.28
-    Connecting to portal.nersc.gov (portal.nersc.gov)|128.55.206.24|:80... connected.
-    HTTP request sent, awaiting response... 301 Moved Permanently
-    Location: https://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/sst.mon.mean.trefadj.anom.1880to2018.nc [following]
-    --2021-04-02 18:40:46--  https://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/sst.mon.mean.trefadj.anom.1880to2018.nc
-    Connecting to portal.nersc.gov (portal.nersc.gov)|128.55.206.24|:443... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 432481041 (412M) [application/x-netcdf]
-    Saving to: ‘sst.mon.mean.trefadj.anom.1880to2018.nc’
-    
-    sst.mon.mean.trefad 100%[===================>] 412.45M  20.1MB/s    in 27s     
-    
-    2021-04-02 18:41:13 (15.5 MB/s) - ‘sst.mon.mean.trefadj.anom.1880to2018.nc’ saved [432481041/432481041]
-    
-    URL transformed to HTTPS due to an HSTS policy
-    --2021-04-02 18:41:13--  https://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/nino34.long.anom.data.txt
-    Resolving portal.nersc.gov (portal.nersc.gov)... 128.55.206.24, 128.55.206.28
-    Connecting to portal.nersc.gov (portal.nersc.gov)|128.55.206.24|:443... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 15449 (15K) [text/plain]
-    Saving to: ‘nino34.long.anom.data.txt’
-    
-    nino34.long.anom.da 100%[===================>]  15.09K  --.-KB/s    in 0.06s   
-    
-    2021-04-02 18:41:13 (266 KB/s) - ‘nino34.long.anom.data.txt’ saved [15449/15449]
-    
-
 
 Next, we make use of Ankur's code to reshape our dataset with appropriate dimensions and define functions which will access data in adequate fashion. It is also worthwhile to mention the use of Principal Component Analysis to reduce the dimension of our problem if necessary. This is a great tool when working with large datasets.  
 
@@ -389,17 +350,6 @@ print(X_train[0,0:5])
 print(y_train.shape)
 print(y_train[0:5])
 ```
-
-    (192, 64800)
-    [-0.00451612 -0.00451612 -0.00451612 -0.00451612 -0.00451612]
-    (192,)
-    1980-02-01    0.33
-    1980-03-01    0.09
-    1980-04-01    0.20
-    1980-05-01    0.13
-    1980-06-01    0.37
-    Freq: MS, dtype: float64
-
 
 At this point we steer away from classification loss and turn our attention to regression loss since we want to predict Niño3.4 indices (values from a cotinuous set). The mathematics behind the scenes still involves optimizing some loss function, it's just distinct to SVM loss previously defined. 
 
@@ -582,180 +532,4 @@ for ii in range(len(depth_arr)):
 ```
 %%shell
 jupyter nbconvert --to Markdown /content/Predicting_ENSO_Event.ipynb
-```
-
-    [NbConvertApp] WARNING | pattern u'/content/Predicting_ENSO_Event.ipynb' matched no files
-    This application is used to convert notebook files (*.ipynb) to various other
-    formats.
-    
-    WARNING: THE COMMANDLINE INTERFACE MAY CHANGE IN FUTURE RELEASES.
-    
-    Options
-    -------
-    
-    Arguments that take values are actually convenience aliases to full
-    Configurables, whose aliases are listed on the help line. For more information
-    on full configurables, see '--help-all'.
-    
-    --execute
-        Execute the notebook prior to export.
-    --allow-errors
-        Continue notebook execution even if one of the cells throws an error and include the error message in the cell output (the default behaviour is to abort conversion). This flag is only relevant if '--execute' was specified, too.
-    --no-input
-        Exclude input cells and output prompts from converted document. 
-        This mode is ideal for generating code-free reports.
-    --stdout
-        Write notebook output to stdout instead of files.
-    --stdin
-        read a single notebook file from stdin. Write the resulting notebook with default basename 'notebook.*'
-    --inplace
-        Run nbconvert in place, overwriting the existing notebook (only 
-        relevant when converting to notebook format)
-    -y
-        Answer yes to any questions instead of prompting.
-    --clear-output
-        Clear output of current file and save in place, 
-        overwriting the existing notebook.
-    --debug
-        set log level to logging.DEBUG (maximize logging output)
-    --no-prompt
-        Exclude input and output prompts from converted document.
-    --generate-config
-        generate default config file
-    --nbformat=<Enum> (NotebookExporter.nbformat_version)
-        Default: 4
-        Choices: [1, 2, 3, 4]
-        The nbformat version to write. Use this to downgrade notebooks.
-    --output-dir=<Unicode> (FilesWriter.build_directory)
-        Default: ''
-        Directory to write output(s) to. Defaults to output to the directory of each
-        notebook. To recover previous default behaviour (outputting to the current
-        working directory) use . as the flag value.
-    --writer=<DottedObjectName> (NbConvertApp.writer_class)
-        Default: 'FilesWriter'
-        Writer class used to write the  results of the conversion
-    --log-level=<Enum> (Application.log_level)
-        Default: 30
-        Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
-        Set the log level by value or name.
-    --reveal-prefix=<Unicode> (SlidesExporter.reveal_url_prefix)
-        Default: u''
-        The URL prefix for reveal.js (version 3.x). This defaults to the reveal CDN,
-        but can be any url pointing to a copy  of reveal.js.
-        For speaker notes to work, this must be a relative path to a local  copy of
-        reveal.js: e.g., "reveal.js".
-        If a relative path is given, it must be a subdirectory of the current
-        directory (from which the server is run).
-        See the usage documentation
-        (https://nbconvert.readthedocs.io/en/latest/usage.html#reveal-js-html-
-        slideshow) for more details.
-    --to=<Unicode> (NbConvertApp.export_format)
-        Default: 'html'
-        The export format to be used, either one of the built-in formats
-        ['asciidoc', 'custom', 'html', 'latex', 'markdown', 'notebook', 'pdf',
-
-
-        'python', 'rst', 'script', 'slides'] or a dotted object name that represents
-        the import path for an `Exporter` class
-    --template=<Unicode> (TemplateExporter.template_file)
-        Default: u''
-        Name of the template file to use
-    --output=<Unicode> (NbConvertApp.output_base)
-        Default: ''
-        overwrite base name use for output files. can only be used when converting
-        one notebook at a time.
-    --post=<DottedOrNone> (NbConvertApp.postprocessor_class)
-        Default: u''
-        PostProcessor class used to write the results of the conversion
-    --config=<Unicode> (JupyterApp.config_file)
-        Default: u''
-        Full path of a config file.
-    
-    To see all available configurables, use `--help-all`
-    
-    Examples
-    --------
-    
-        The simplest way to use nbconvert is
-        
-        > jupyter nbconvert mynotebook.ipynb
-        
-        which will convert mynotebook.ipynb to the default format (probably HTML).
-        
-        You can specify the export format with `--to`.
-        Options include ['asciidoc', 'custom', 'html', 'latex', 'markdown', 'notebook', 'pdf', 'python', 'rst', 'script', 'slides'].
-        
-        > jupyter nbconvert --to latex mynotebook.ipynb
-        
-        Both HTML and LaTeX support multiple output templates. LaTeX includes
-        'base', 'article' and 'report'.  HTML includes 'basic' and 'full'. You
-        can specify the flavor of the format used.
-        
-        > jupyter nbconvert --to html --template basic mynotebook.ipynb
-        
-        You can also pipe the output to stdout, rather than a file
-        
-        > jupyter nbconvert mynotebook.ipynb --stdout
-        
-        PDF is generated via latex
-        
-        > jupyter nbconvert mynotebook.ipynb --to pdf
-        
-        You can get (and serve) a Reveal.js-powered slideshow
-        
-        > jupyter nbconvert myslides.ipynb --to slides --post serve
-        
-        Multiple notebooks can be given at the command line in a couple of 
-        different ways:
-        
-        > jupyter nbconvert notebook*.ipynb
-        > jupyter nbconvert notebook1.ipynb notebook2.ipynb
-        
-        or you can specify the notebooks list in a config file, containing::
-        
-            c.NbConvertApp.notebooks = ["my_notebook.ipynb"]
-        
-        > jupyter nbconvert --config mycfg.py
-    
-
-
-
-    ---------------------------------------------------------------------------
-
-    CalledProcessError                        Traceback (most recent call last)
-
-    <ipython-input-91-b08d09e59ca5> in <module>()
-    ----> 1 get_ipython().run_cell_magic('shell', '', 'jupyter nbconvert --to Markdown /content/Predicting_ENSO_Event.ipynb')
-    
-
-    /usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py in run_cell_magic(self, magic_name, line, cell)
-       2115             magic_arg_s = self.var_expand(line, stack_depth)
-       2116             with self.builtin_trap:
-    -> 2117                 result = fn(magic_arg_s, cell)
-       2118             return result
-       2119 
-
-
-    /usr/local/lib/python3.7/dist-packages/google/colab/_system_commands.py in _shell_cell_magic(args, cmd)
-        111   result = _run_command(cmd, clear_streamed_output=False)
-        112   if not parsed_args.ignore_errors:
-    --> 113     result.check_returncode()
-        114   return result
-        115 
-
-
-    /usr/local/lib/python3.7/dist-packages/google/colab/_system_commands.py in check_returncode(self)
-        137     if self.returncode:
-        138       raise subprocess.CalledProcessError(
-    --> 139           returncode=self.returncode, cmd=self.args, output=self.output)
-        140 
-        141   def _repr_pretty_(self, p, cycle):  # pylint:disable=unused-argument
-
-
-    CalledProcessError: Command 'jupyter nbconvert --to Markdown /content/Predicting_ENSO_Event.ipynb' returned non-zero exit status 255.
-
-
-
-```
-
 ```
