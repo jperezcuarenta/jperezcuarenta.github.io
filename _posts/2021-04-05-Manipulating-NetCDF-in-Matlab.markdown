@@ -1,7 +1,10 @@
 ---
 layout: post
 title:  "Manipulating NetCDF in Matlab"
-date:   2021-04-05 7:55:10 -0700
+author: "Jesus Perez Cuarenta"
+categories: journal
+tags: [documentation,sample]
+
 ---
 For our first post we will explore how to read and create .nc 
 files within Matlab. The files we will be using are hosted 

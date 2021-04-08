@@ -3,4 +3,4 @@ layout: page
 title: Contact
 ---
 
-Update the `menu/contact.md` file to change your Contact page.
+If you face any issues with my site, or just have some feedback, please do not hesitate to contact me at [mailto](mailto:jperezcuarenta@sdsu.edu).
