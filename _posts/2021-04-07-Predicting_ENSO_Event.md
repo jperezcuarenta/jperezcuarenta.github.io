@@ -1,3 +1,11 @@
+---
+layout: post
+title:  "Predicting EN-SO Event"
+author: "Jesus Perez Cuarenta"
+categories: journal
+tags: [documentation,sample]
+
+---
 
 # Predicting the ENSO Event
 This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (EN-SO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event. 
@@ -532,4 +540,23 @@ for ii in range(len(depth_arr)):
 ```
 %%shell
 jupyter nbconvert --to Markdown /content/Predicting_ENSO_Event.ipynb
+```
+
+    [NbConvertApp] Converting notebook /content/Predicting_ENSO_Event.ipynb to Markdown
+    [NbConvertApp] Support files will be in Predicting_ENSO_Event_files/
+    [NbConvertApp] Making directory /content/Predicting_ENSO_Event_files
+    [NbConvertApp] Making directory /content/Predicting_ENSO_Event_files
+    [NbConvertApp] Writing 23846 bytes to /content/Predicting_ENSO_Event.md
+
+
+
+
+
+    
+
+
+
+
+```
+
 ```
