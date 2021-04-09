@@ -177,6 +177,10 @@ $$
 x = \begin{pmatrix}1 \\ 1 \\ 1 \\ 1 \end{pmatrix}, \quad
 w_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}^{T}, \quad
 w_{2} \begin{pmatrix} \frac{1}{4} \\ \frac{1}{4} \\ \frac{1}{4} \\ \frac{1}{4} \end{pmatrix}^{T}.
+
+
+
+
 \end{align*}
 $$
 
@@ -533,6 +537,7 @@ Here are some of our predictions at 1 and 6 month lead times by considering anom
 <figure>
 <center>
 <img src='https://drive.google.com/uc?export=view&id=10DE1WUG9mqifg3ZiBgaKLtUkPf9-7NZ_' />
+
 <figcaption> Figure 6: Comparing 155 m deep ocean temperature anomalies at 1 month lead time. </figcaption></center>
 </figure>
 
