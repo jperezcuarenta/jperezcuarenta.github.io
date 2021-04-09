@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "Predicting EN-SO Phenomena"
+title:  "Predicting ENSO Phenomena"
 author: "Jesus Perez Cuarenta"
 categories: journal
 tags: [documentation]
 ---
 
-This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (EN-SO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event. 
+This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (ENSO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event. 
 
 We first declare the Python libraries accessed.
 
@@ -521,7 +521,7 @@ for ii in range(len(depth_arr)):
       'Predicted and True Ocean Temperature Anomalies at'+' '+str(month_lead)+' '+'Month Lead Time. \n Corr: {:.2f}'.format(corr))
 ```
 
-Here are some of our results at 1 and 6 month lead times by considering anomalies across varying ocean depth.
+Here are some of our predictions at 1 and 6 month lead times by considering anomalies at varying depths.
 
 * 1 Month Lead Time
 <figure>
