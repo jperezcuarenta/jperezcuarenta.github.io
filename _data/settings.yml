@@ -4,7 +4,7 @@ disqus:
   disqus_shortname: ''
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
-google-ID: ''
+google-ID: 'G-NTW92KSJXT'
 
 menu:
 - {name: 'About', path: 'menu', url: 'about.html'}
@@ -25,8 +25,8 @@ pagination:
   next_page: 'Newer'
   previous_page: 'Older'
 
-#sharing_button_prompt: 'Feel free to share!'
+sharing_button_prompt: 'Feel free to share!'
 
-#related_posts: 'You may also enjoy:'
+related_posts: 'Other posts:'
 
 post_date_prefix: 'Written on'
