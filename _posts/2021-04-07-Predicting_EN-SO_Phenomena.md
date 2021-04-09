@@ -1,7 +1,6 @@
-
 ---
 layout: post
-title:  "Predicting El Niño-Southern Oscillation Phenomena"
+title:  "Predicting EN-SO Phenomena"
 author: "Jesus Perez Cuarenta"
 categories: journal
 tags: [documentation,climate,python]
