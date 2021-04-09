@@ -3,7 +3,7 @@ layout: post
 title:  "Predicting EN-SO Phenomena"
 author: "Jesus Perez Cuarenta"
 categories: journal
-tags: [documentation,climate,python]
+tags: [documentation]
 ---
 
 This notebook goes over a short elementary explanation of the El Niño-Southern Oscillation (EN-SO) phenomenon as well as a gentle introduction to machine learning tools used to predict an ENSO event. 
@@ -11,7 +11,7 @@ This notebook goes over a short elementary explanation of the El Niño-Southern 
 We first declare the Python libraries accessed.
 
 
-```
+```python
 # from google.colab import files
 # To check existence of files
 import os
@@ -217,7 +217,7 @@ Without further ado, let's obtain the required dataset with a few lines of code.
 
 
 
-```
+```python
 # COBE-SST dataset
 !wget http://portal.nersc.gov/project/dasrepo/AGU_ML_Tutorial/sst.mon.mean.trefadj.anom.1880to2018.nc
 # Niño3.4 Indices
@@ -227,7 +227,7 @@ Without further ado, let's obtain the required dataset with a few lines of code.
 Next, we make use of Ankur's code to reshape our dataset with appropriate dimensions and define functions which will access data in adequate fashion. It is also worthwhile to mention the use of Principal Component Analysis to reduce the dimension of our problem if necessary. This is a great tool when working with large datasets.  
 
 
-```
+```python
 #Scaffold code to load in data.  This code cell is mostly data wrangling
 
 def load_enso_indices():
@@ -336,7 +336,7 @@ def plot_nino_time_series(y, predictions, title):
 Now we store our training and validation sets with appropriate names.
 
 
-```
+```python
 # Sample loading of data
 
 # Training Set
@@ -355,7 +355,7 @@ print(y_train[0:5])
 At this point we steer away from classification loss and turn our attention to regression loss since we want to predict Niño3.4 indices (values from a cotinuous set). The mathematics behind the scenes still involves optimizing some loss function, it's just distinct to SVM loss previously defined. 
 
 
-```
+```python
 # Here, the ground truth corresponds to y_val (validation set)
 # Our program produces predictions based on only
 # the training data (X_train, y_train), and the predictor
@@ -390,7 +390,7 @@ We wish to update the previous code to accommodate the [GODAS dataset](https://w
 Moreover, we have modified the code shown in the previous section allowing us to read files located in our Google Drive so please be careful with the correct directory. 
 
 
-```
+```python
 def load_enso_indices():
   """
   Reads in the txt data file to output a pandas Series of ENSO vals
@@ -494,7 +494,7 @@ def plot_nino_time_series(y, predictions, depth, title):
 ```
 
 
-```
+```python
 # Depth levels we consider
 depth_arr = np.arange(105,215,10)
 

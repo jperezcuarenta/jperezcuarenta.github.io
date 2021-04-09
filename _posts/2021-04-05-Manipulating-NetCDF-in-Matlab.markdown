@@ -3,7 +3,7 @@ layout: post
 title:  "Manipulating NetCDF in Matlab"
 author: "Jesus Perez Cuarenta"
 categories: journal
-tags: [documentation,climate,Matlab]
+tags: [documentation]
 
 ---
 For our first post we will explore how to read and create .nc 
