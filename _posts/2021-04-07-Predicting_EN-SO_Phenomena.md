@@ -521,7 +521,7 @@ for ii in range(len(depth_arr)):
       'Predicted and True Ocean Temperature Anomalies at'+' '+str(month_lead)+' '+'Month Lead Time. \n Corr: {:.2f}'.format(corr))
 ```
 
-Here are some of our results at 1, 4, and 6 month lead times.
+Here are some of our results at 1 and 6 month lead times by considering anomalies across varying ocean depth.
 
 * 1 Month Lead Time
 <figure>
