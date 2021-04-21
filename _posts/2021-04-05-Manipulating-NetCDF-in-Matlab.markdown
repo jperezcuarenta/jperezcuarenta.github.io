@@ -8,7 +8,7 @@ tags: [documentation]
 ---
 For our first post we will explore how to read and create .nc 
 files within Matlab. The files we will be using are hosted 
-at the [NOAA's Physical Sciences Laboratory](https://www.psl.noaa.gov/data/gridded/data.godas.html) 
+at the [National Oceanic and Atmospheric Administration (NOAA) Physical Sciences Laboratory](https://www.psl.noaa.gov/data/gridded/data.godas.html) 
 website. We will also use the [COBE SST data set](ftp://ftp.cdc.noaa.gov/Datasets/COBE/sst.mon.mean.nc). 
 The latter file can be downloaded manually. I saved the file as *cobeData.nc*, which can be 
 modified -- just make sure to change the code accordingly. 
