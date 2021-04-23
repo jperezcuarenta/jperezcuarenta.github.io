@@ -232,7 +232,7 @@ To accurately save data in an *.nc* file I also required vectors corresponding t
 
 ### Matlab Code for Accessing Data and Constructing Time Vector
 
-``` Matlab
+```matlab
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Notes:
 % topoChico4.m will read through Shen's data set
