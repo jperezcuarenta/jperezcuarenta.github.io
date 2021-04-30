@@ -488,3 +488,17 @@ plot_nino_time_series(y_val, predictions, depth_sel,
 <figcaption> Figure 11: Initial simulation with Dr. Shen's data set. Most likely there are bugs in my code. </figcaption></center>
 </figure>
 
+## Week 3
+
+In the third week I met with my faculty advisor, Dr. Shen, to discuss potential improvements to results from the previous week. I experimented with relating monthly global ocean temperature anomaly data with the average temperature in the Niño3.4 region, a distinct approach compared to what we attempted during Week 1. 
+
+Most of the programming this week involved code debugging. There is an issue with the size of arrays in Python which does not allow for certain dates to be predicted. Although I am eager to fix the code I know such experience will prove to be useful for all sorts of data manipulation involving the *pandas* library.
+
+I also began to read *Learning with Kernels* authored by Bernhard Schölkopf. Here I wish to learn more about Support Vector Machines (SVM) and regularization terms. In practice, when dealing with machine learning algorithms one keeps in mind a bias-variance tradeoff. From the hackathon document mentioned in Week 1 we have the following passage:
+
+    The behavior of machine learning models can be decomposed into two quantities:
+
+    Bias: On the training set, how well does the machine learning model predict the truth?
+    Variance: As the input data varies, how does the machine learning prediction vary? For a small change in the input predictors, how much would the ML prediction change?
+
+With these topics in mind, I will provide more thorough results next week by introducing a regularization term in our learning model.
