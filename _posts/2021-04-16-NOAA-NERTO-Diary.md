@@ -502,3 +502,23 @@ I also began to read *Learning with Kernels* authored by Bernhard Schölkopf. He
     Variance: As the input data varies, how does the machine learning prediction vary? For a small change in the input predictors, how much would the ML prediction change?
 
 With these topics in mind, I will provide more thorough results next week by introducing a regularization term in our learning model.
+
+## Week 4
+
+Week four marked a departure from ordinary linear regression implemented thus far in our machine learning algorithms. My weekly tasks involved further reading about Ridge, Lasso, and Elastic-Net regression as well as their numerical implementation. In practice choosing the correct regression model is non-trivial. I decided to compare Ordinary Linear Regression (OLR) versus Ridge Regression (RR).
+
+In mathematical terms, if we take $X$ as an array of size $M \times N$ and $w \in \mathbb{R}^{N}$, the implemented RR model admits the minimization problem
+
+$$
+\min_{w} \| \hat{y}(w,X) - y \|_{\ell^{2}}^{2} + \alpha \| w \|_{\ell^{2}}^{2}
+$$
+
+for $\alpha \geq 0$ where $\hat{y} \in \mathbb{R}^{M}$ approximates the ground truth $y \in \mathbb{R}^{M}$ The value of $\alpha$ is called a hyper-parameter since it is not tuned during our machine learning process (in contrast to the elements of $w$). Finding a suitable value of $\alpha$ was possible using the *GridSearchCV* function from the *sklearn* library. Note that the case $\alpha = 0$ corresponds to OLR (results from Week 1). Ridge results showed a slight improvement against OLR. 
+
+I also began setting up code for training a neural network (NN). In contrast to linear regression, NN make use of an indicator function which can identify non-linear relationships. In general, LR gives us results that are interpretable but less predictive. With NN we have the opposite relationship: less interpretable results but better predictions. So far I have managed to obtain a meaningful loss function on training data, but not on the validation set.
+
+<figure>
+<center>
+<img src='https://drive.google.com/uc?export=view&id=1H8O44S2YynOq07Pdgg1YcvyyN2lz62AK' />
+<figcaption> Figure 12: Loss functions with respect to Epoch. Meaningful Train Loss but not Test Loss. </figcaption></center>
+</figure>
